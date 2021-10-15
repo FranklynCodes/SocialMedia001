@@ -1,3 +1,5 @@
+// Declares type schema for mongodb with sapollo 
+
 const { gql } = require("apollo-server");
 
 module.exports = gql`
@@ -27,11 +29,12 @@ module.exports = gql`
 		getPosts: [Post]
 	}
 	type Mutation {
-		# Change in db 
-		# input as arguments 
-		# Similar to function call 
-		# Returns a type of User 
+		# Change in db
+		# input as arguments
+		# Similar to function call
+		# Returns a type of User
 		register(registerInput: RegisterInput): User!
+		login(username: String!, password: String!): User!
 	}
 `;
 
