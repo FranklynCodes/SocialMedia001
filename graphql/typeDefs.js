@@ -1,4 +1,4 @@
-// Declares type schema for mongodb with sapollo 
+// Declares type schema for mongodb with sapollo
 
 const { gql } = require("apollo-server");
 
@@ -27,6 +27,8 @@ module.exports = gql`
 
 	type Query {
 		getPosts: [Post]
+		# //~ querry called getPots which takes postID: of type ID which is required and will return Post
+		getPost(postId: ID!): Post
 	}
 	type Mutation {
 		# Change in db
@@ -35,6 +37,8 @@ module.exports = gql`
 		# Returns a type of User
 		register(registerInput: RegisterInput): User!
 		login(username: String!, password: String!): User!
+		createPost(body: String!): Post!
+		deletePost(postId: ID!): String!
 	}
 `;
 
