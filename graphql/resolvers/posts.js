@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const Post = require("../../models/Post");
 const checkAuth = require("../../util/check-auth");
@@ -63,6 +63,31 @@ module.exports = {
 				}
 			} catch (err) {
 				throw new Error(err);
+			}
+		},
+		// Sometimes in CRUD you have to write the same code for different resources
+		async likePost(_, { postId }, context) {
+			const { username } = checkAuth(context);
+
+			const post = await Post.findById(postId);
+
+			if (post) {
+				// A user can only have one like per post
+				if (post.likes.find((like) => like.username)) {
+					// Returns object
+					// Post already liked, unlike it
+					post.likes = post.likes.filter((like) => like.username !== username); // Leave all likes that do not match username, however remove the truty username likes
+				} else {
+					// Not liked, like post
+					post.likes.push({
+						username,
+						createdAt: new Date().toISOString(),
+					});
+				}
+				await post.save();
+				return post;
+			} else {
+				throw new UserInputError("Post not found");
 			}
 		},
 	},
