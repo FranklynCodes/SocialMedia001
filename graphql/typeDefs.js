@@ -8,7 +8,24 @@ module.exports = gql`
 		body: String!
 		createdAt: String!
 		username: String!
+		# If you have a ! inside the [] that means that there there must be at least one element in the array
+		# comments:[Comment!]!
+		comments: [Comment!]!
+		likes: [Like]!
 	}
+
+	type Comment {
+		id: ID!
+		createdAt: String!
+		username: String!
+		body: String!
+	}
+	type Like {
+		id: ID!
+		createdAt: String!
+		username: String!
+	}
+
 	type User {
 		# Even if there is a required the user can still opt out from getting these data, however it MUST return from our resolver
 		id: ID!
@@ -39,6 +56,13 @@ module.exports = gql`
 		login(username: String!, password: String!): User!
 		createPost(body: String!): Post!
 		deletePost(postId: ID!): String!
+		# Post ID
+		createComment(postId: String!, body: String!): Post!
+
+		# Takes both postid and commentid | if post is deleted, delete all comments
+		# To avoid issue of looking up comment when post is already deleted or the inverse looking up a post to find a comment but it has already been deleted
+		deleteComment(postId: ID!, commentId: ID!): Post!
+		likePost(postId: ID!): Post! # Toggle to adjust your like from +1 or 0
 	}
 `;
 
