@@ -30,6 +30,7 @@ yarn-error.log*
 /secret
 **/secret/
 **/node_modules
+node_modules
 .env
 *Secret.md
 
