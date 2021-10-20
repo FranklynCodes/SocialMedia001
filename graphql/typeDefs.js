@@ -12,6 +12,10 @@ module.exports = gql`
 		# comments:[Comment!]!
 		comments: [Comment!]!
 		likes: [Like]!
+		# Calcing ttl num of comments and likes, via server instead of client, to mimizime the ammount of computation that is happening on the client
+		# Sends through modiferis instead of mutation
+		likeCount: Int!
+		commentCount: Int!
 	}
 
 	type Comment {
