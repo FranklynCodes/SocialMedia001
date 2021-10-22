@@ -72,11 +72,11 @@ module.exports = {
 			// TODO: Make sure user doesn't already exist
 
 			// 2nd paramater/args = type Mutation{registerInput} (input RegisterInput)
-			
+
 			const user = await User.findOne({
 				username,
 			});
-			if (user == true) {
+			if (user === user) {
 				throw new UserInputError("Username is taken", {
 					errors: {
 						// Payload
