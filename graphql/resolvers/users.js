@@ -76,7 +76,9 @@ module.exports = {
 			const user = await User.findOne({
 				username,
 			});
-			if (user === user) {
+			// if (user === user) {
+			// If user exists do x
+			if (user) {
 				throw new UserInputError("Username is taken", {
 					errors: {
 						// Payload
