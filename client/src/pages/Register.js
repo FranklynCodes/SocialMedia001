@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/react-hooks";
 import { Button, Form } from "semantic-ui-react";
 
+import { useForm } from "../util/hooks.js";
+
 function Register(props) {
 	const [errors, setErrors] = useState({});
 
-	const [values, setValues] = useState({
+	// function onChange(event) {
+	// Need to spread first or else will become overwritten
+	// 	setValues({ ...values, [event.target.name]: event.target.value });
+	// }
+
+	// onChange = Need to spread first or else will become overwritten
+	const { onChange, onSubmit, values } = useForm(registerUser, {
 		username: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
 	});
-
-	function onChange(event) {
-		// Need to spread first or else will become overwritten
-		setValues({ ...values, [event.target.name]: event.target.value });
-	}
 
 	// array destrictomg
 	const [addUser, { loading }] = useMutation(REGISTER_USER, {
@@ -40,13 +43,15 @@ function Register(props) {
 		},
 		variables: values, // OR variables: values,
 		// Condensed into values since we want all the data and that has already been pre-spread
+		// Errors are encapsulated in the error object
 	});
 
-	const onSumbit = function (event) {
-		event.preventDefault();
+	function registerUser() {
+		// HOISTED - All javascript functions explicitly declared with functions at the begining of the program are HOISTED to the top of the script they are read through initally even if it is declared towards the bottom of the file as long as it has the function key word it is recognized up there.
+		// You can kind of hack closures using this.
+
 		addUser();
-	};
-	// Errors are encapsulated in the error object
+	}
 
 	return (
 		<div className="form-container">
@@ -54,7 +59,7 @@ function Register(props) {
 			This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or 
 			https://reactjs.org/docs/forms.html#controlled-components */}
 
-			<Form onSubmit={onSumbit} noValidate className={loading ? "loading" : ""}>
+			<Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
 				<h1>Register</h1>
 
 				<Form.Input
