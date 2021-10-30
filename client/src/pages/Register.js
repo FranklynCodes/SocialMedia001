@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { gql, useMutation } from "@apollo/react-hooks";
 import { Button, Form } from "semantic-ui-react";
 
+import { AuthContext } from "../context/auth.js";
 import { useForm } from "../util/hooks.js";
 
 function Register(props) {
+	const context = useContext(AuthContext);
 	const [errors, setErrors] = useState({});
 
 	// function onChange(event) {
@@ -23,10 +25,8 @@ function Register(props) {
 	// array destrictomg
 	const [addUser, { loading }] = useMutation(REGISTER_USER, {
 		// will triger on mutation execute
-		update(proxy, result) {
-			// proxy has meta data
-			// TODO:remove proxy later
-			console.log("result:", result);
+		update(_, { data: { register: userData } }) {
+			context.login(userData);
 			props.history.push("/");
 		},
 		onError(err) {

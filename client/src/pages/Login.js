@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { gql, useMutation } from "@apollo/react-hooks";
 import { Button, Form } from "semantic-ui-react";
 
+import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
 function Login(props) {
+	const context = useContext(AuthContext); // Did not destructure the login here because would become unreadable to many login keywords
 	const [errors, setErrors] = useState({});
 
 	// onChange = Need to spread first or else will become overwritten
@@ -13,11 +15,13 @@ function Login(props) {
 		password: "",
 	});
 
-	// array destrictomg
+	// array destructing
 	const [loginUser, { loading }] = useMutation(LOGIN_USER, {
 		// will triger on mutation execute
-		update(_, result) {
-			// proxy has meta data
+		update(_, { data: { login: userData } }) {
+			// ! Need to hit this function first in order to pass the userdata held from the context variable
+			console.log("userData:", userData);
+			context.login(userData);
 			props.history.push("/");
 		},
 		onError(err) {
