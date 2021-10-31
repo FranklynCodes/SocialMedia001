@@ -24,7 +24,6 @@ function Home() {
 						<PostForm></PostForm>
 					</Grid.Column>
 				)}
-
 				{loading ? (
 					<h1>Loading posts..</h1>
 				) : (

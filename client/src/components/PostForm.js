@@ -9,6 +9,7 @@ function PostForm() {
 		body: "",
 	}); // createpost = callback
 
+	// For register and login section we used on error method then set them to local errors but here it doesn't make sense
 	const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
 		variables: values,
 		update(_, result) {
@@ -16,9 +17,10 @@ function PostForm() {
 			values.body = "";
 		},
 	});
-	function createPostCallback() {
-		createPost();
-	}
+
+    function createPostCallback(){
+        createPost()
+    }
 
 	return (
 		<Form onSubmit={onSubmit}>
