@@ -8,7 +8,7 @@ module.exports = {
 		// likeCount:(parent) // parent holds data from previous steps
 		// might have to swap this to arrow notation, cut the return
 		likeCount(parent) {
-			console.log("parent:", parent);
+			console.log("parent:", parent); // Prints out last POST data
 			return parent.likes.length;
 		},
 		commentCount: (parent) => parent.comments.length,
