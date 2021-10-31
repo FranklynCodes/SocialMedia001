@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Grid } from "semantic-ui-react";
 
+import { AuthContext } from "../context/auth";
 import PostCard from "../components/PostCard";
+import PostForm from "../components/PostForm.js";
 
 function Home() {
+	const { user } = useContext(AuthContext);
+	console.log("user:", user);
 	const { loading, data: { getPosts: posts } = {} } = useQuery(FETCH_POSTS_QUERY); // Careful posts can be null or undefined, create a case for that
 
 	return (
@@ -15,6 +19,12 @@ function Home() {
 				<h1>Recent Posts</h1>
 			</Grid.Row>
 			<Grid.Row>
+				{user && ( // if we have a user/logged in show this form
+					<Grid.Column>
+						<PostForm></PostForm>
+					</Grid.Column>
+				)}
+
 				{loading ? (
 					<h1>Loading posts..</h1>
 				) : (
