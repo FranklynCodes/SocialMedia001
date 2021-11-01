@@ -6,6 +6,8 @@ const checkAuth = require("../../util/check-auth");
 module.exports = {
 	Query: {
 		async getPosts() {
+			console.log("getPosts\n:"); // To check when resolvers are being hit
+
 			// Try catch to handle errors so server doesn't shutdown
 			try {
 				// .sort({ createdAt: -1 }) creates post in decneding order via mongoose
@@ -16,6 +18,7 @@ module.exports = {
 			}
 		},
 		async getPost(_, { postId }) {
+			console.log("getPosts\n:"); // To check when resolvers are being hit
 			try {
 				const post = await Post.findById(postId);
 				if (post) {
@@ -35,8 +38,9 @@ module.exports = {
 
 		// user will always be true here because checkAuth does our validation by the time were back in this file
 		async createPost(_, { body }, context) {
+			console.log("createPost:Start\n"); // To check when resolvers are being hit
 			const user = checkAuth(context);
-			console.log(user);
+			console.log("createPost:", user);
 
 			// if (args.body.trim() === "") {
 			if (body.trim() === "") {
@@ -55,6 +59,8 @@ module.exports = {
 			return post;
 		},
 		async deletePost(_, { postId }, context) {
+			console.log("deletePost:ResolverHit\n");
+
 			// check if user is who they say they are, you don't want any user to delete there post
 			const user = checkAuth(context);
 

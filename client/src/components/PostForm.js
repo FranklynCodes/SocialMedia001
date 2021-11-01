@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
+import { FETCH_POSTS_QUERY } from "../util/graphql";
 
 function PostForm() {
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
@@ -14,9 +15,25 @@ function PostForm() {
 	// For register and login section we used on error method then set them to local errors but here it doesn't make sense
 	const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
 		variables: values,
-		update(_, result) {
-			// console.log("PostForm\tresult:", result);
+		// ! Querrys are not being constantly being sent to server, it may seem so but it is limited to being sent only to the client side cacche.
+		// ! Apollo querry output will show several queries but our server is not receiving all of those query only the 1st getPosts is being sent to the server, do not worry about overloading your server in this condition
+		// | Learn apollo local caching query and server connection
+		update(proxy, result) {
+			// ~ See posts.js ! comments
+			// ? How do l delete cache? How do l directly access cache and modify it? How do l use graphql querry on our existing data
+			console.log("PostForm\tresult:", result);
+
+			// ! Inside variable getPosts, all this data is scoped inside getPosts, it is the rootQuerry
+			const data = proxy.readQuery({
+				query: FETCH_POSTS_QUERY,
+				variables: values,
+			});
+			data.getPosts = [result.data.createPost, ...data.getPosts];
+			proxy.writeQuery({ query: FETCH_POSTS_QUERY, variables: values, data });
 			values.body = "";
+		},
+		onError(error) {
+			return error;
 		},
 	});
 
