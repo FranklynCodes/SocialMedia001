@@ -8,3 +8,10 @@
 	width: 400px;
 	margin: auto;
 }
+
+.ui.button:not(.icon) > .icon:not(.button):not(.dropdown) {
+	margin: 0px;
+}
+.ui.button > .icon:not(.button) {
+	margin: 0px;
+}
