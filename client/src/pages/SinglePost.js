@@ -1,25 +1,29 @@
 import React, { useContext } from "react";
 import gql from "graphql-tag";
-import { useQuery, useQuery } from "@apollo/react-hooks";
-import { FETCH_POSTS_QUERY } from "../util/graphql";
-import { Card, CardContent, Grid, GridColumn } from "semantic-ui-react";
-import LikeButton from "../components/LikeButton";
-
+import { useQuery } from "@apollo/react-hooks";
+// import { FETCH_POSTS_QUERY } from "../util/graphql";
+import { Button, Card, CardContent, Grid, GridColumn, Icon, Image, Label } from "semantic-ui-react";
 import moment from "moment";
+
 import { AuthContext } from "../context/auth";
+import LikeButton from "../components/LikeButton";
+import DeleteButton from "../components/DeleteButton";
 
 function SinglePost(props) {
-	const postId = props.match.parent.postId; // Match url parameters
+	const postId = props.match.params.postId; // Match url parameters
 	const { user } = useContext(AuthContext);
 	console.log("postId:", postId);
 
-	const {
-		data: { getPost },
-	} = useQuery(FETCH_POSTS_QUERY, {
+	const { data: { getPost } = {} } = useQuery(FETCH_POST_QUERY, {
 		variables: {
 			postId,
 		},
 	});
+
+	function deletePostCallback() {
+		props.history.push("/");
+	}
+
 	let postMarkup;
 	if (!getPost) {
 		postMarkup = <p>Loading post...</p>; // Add Spiner
@@ -39,7 +43,7 @@ function SinglePost(props) {
 						<Card fluid>
 							<CardContent>
 								<Card.Header>{username}</Card.Header>
-								<Card.Meta>{moment(createdAt.fromNow())}</Card.Meta>
+								<Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
 								<Card.Description>{body}</Card.Description>
 							</CardContent>
 							<hr />
@@ -62,6 +66,12 @@ function SinglePost(props) {
 										{commentCount}
 									</Label>
 								</Button>
+								{user && user.username === username && (
+									<DeleteButton
+										postId={id}
+										callback={deletePostCallback}
+									></DeleteButton>
+								)}
 							</CardContent>
 						</Card>
 					</GridColumn>
@@ -69,11 +79,10 @@ function SinglePost(props) {
 			</Grid>
 		);
 	}
-
-	return <div></div>;
+	return postMarkup;
 }
 
-const FETCH_POST_QUERRY = gql`
+const FETCH_POST_QUERY = gql`
 	query ($postId: ID!) {
 		getPost(postId: $postId) {
 			id
