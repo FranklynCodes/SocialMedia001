@@ -27,6 +27,17 @@ const authLink = setContext((req, pre) => {
 const client = new ApolloClient({
 	link: authLink.concat(httpLink), // This will added the token to our request and succesfully send any protected api call
 	cache: new InMemoryCache(), // Instanciates in memory cachce
+	// typePolicies: {
+	// 	Query: {
+	// 		fields: {
+	// 			getPosts: {
+	// 				merge(existing, incoming) {
+	// 					return incoming;
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// },
 });
 
 export default (

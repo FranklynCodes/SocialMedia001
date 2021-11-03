@@ -11,7 +11,7 @@ import MenuBar from "./components/MenuBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-// import SinglePost from "./pages/SinglePost.js";
+import SinglePost from "./pages/SinglePost.js";
 
 import "./App.css";
 function App() {
@@ -24,7 +24,7 @@ function App() {
 					{/* Passes down atributes such as exact, patch, component */}
 					<AuthRoute exact path="/login" component={Login}></AuthRoute>
 					<AuthRoute exact path="/register" component={Register}></AuthRoute>
-					{/* <Route exact path={"/posts/:postId"} component={SinglePost}></Route> */}
+					<Route exact path={"/posts/:postId"} component={SinglePost}></Route>
 				</Container>
 			</Router>
 		</AuthProvider>
