@@ -61,8 +61,9 @@ module.exports = gql`
 		createPost(body: String!): Post!
 		deletePost(postId: ID!): String!
 		# Post ID
-		createComment(postId: String!, body: String!): Post!
 
+		#TODO: createComment(postId: ID!, body: String!): Post! #Make this true, refactor code
+		createComment(postId: String!, body: String!): Post! #  Change postId string type to type of ID bug#1
 		# Takes both postid and commentid | if post is deleted, delete all comments
 		# To avoid issue of looking up comment when post is already deleted or the inverse looking up a post to find a comment but it has already been deleted
 		deleteComment(postId: ID!, commentId: ID!): Post!

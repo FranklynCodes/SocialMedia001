@@ -1,8 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useRef } from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 // import { FETCH_POSTS_QUERY } from "../util/graphql";
-import { Button, Card, CardContent, Grid, GridColumn, Icon, Image, Label } from "semantic-ui-react";
+import {
+	Button,
+	Card,
+	CardContent,
+	Form,
+	Grid,
+	GridColumn,
+	Icon,
+	Image,
+	Label,
+} from "semantic-ui-react";
 import moment from "moment";
 
 import { AuthContext } from "../context/auth";
@@ -12,7 +22,11 @@ import DeleteButton from "../components/DeleteButton";
 function SinglePost(props) {
 	const postId = props.match.params.postId; // Match url parameters
 	const { user } = useContext(AuthContext);
+	const commentInputRef = useRef(null);
+
 	console.log("postId:", postId);
+
+	const [comment, setComment] = useState("");
 
 	const { data: { getPost } = {} } = useQuery(FETCH_POST_QUERY, {
 		variables: {
@@ -23,6 +37,16 @@ function SinglePost(props) {
 	function deletePostCallback() {
 		props.history.push("/");
 	}
+	const [sumbitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
+		update() {
+			setComment("");
+			commentInputRef.current.blur();
+		},
+		variables: {
+			postId,
+			body: comment,
+		},
+	});
 
 	let postMarkup;
 	if (!getPost) {
@@ -74,6 +98,33 @@ function SinglePost(props) {
 								)}
 							</CardContent>
 						</Card>
+						{user && (
+							<Card fluid>
+								<Card.Content>
+									<p>Post a comment </p>
+									<Form>
+										<div className="ui action input fluid">
+											<input
+												type="text"
+												placeholder="Comment..."
+												value={comment}
+												onChange={(event) => setComment(event.target.value)}
+												ref={commentInputRef} // Can't ref semantic form directly since it is already a component
+											></input>
+											<Button
+												type="sumbit"
+												className="ui button teal"
+												disabled={comment.trim() === ""}
+												onClick={sumbitComment}
+											>
+												Sumbit Comment
+											</Button>
+										</div>
+									</Form>
+								</Card.Content>
+							</Card>
+						)}
+
 						{comments.map((comment) => (
 							<Card fluid key={comment.id}>
 								<CardContent>
@@ -95,8 +146,25 @@ function SinglePost(props) {
 			</Grid>
 		);
 	}
+
 	return postMarkup;
 }
+
+const SUBMIT_COMMENT_MUTATION = gql`
+	# mutation ($postId: ID!, $body: String!) { #TODO: See typdefs in apollo to match to ID instead of string, refactor bug#1
+	mutation createComment($postId: String!, $body: String!) {
+		createComment(postId: $postId, body: $body) {
+			id # post id
+			comments {
+				id # comment id
+				body
+				createdAt
+				username
+			}
+			commentCount
+		}
+	}
+`;
 
 const FETCH_POST_QUERY = gql`
 	query ($postId: ID!) {
