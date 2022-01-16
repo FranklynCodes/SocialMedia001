@@ -42,8 +42,8 @@ function DeleteButton({ postId, commentId, callback }) {
 	return (
 		<>
 			<MyPopup
-				// If we have comment id that means were deleting a comment , post id is other
-				content={commentId ? "Delete comment" : "Delete Post"} // Review
+				// REVIEW: Fix comment tab-accessability, on click go to input box 
+				content={commentId ? "Delete comment" : "Delete Post"} // Review: If we have comment id that means were deleting a comment , post id is other
 			>
 				<Button as="div" color="red" floated="right" onClick={() => setConfirmOpen(true)}>
 					<Icon name="trash" style={{ margin: 0 }} />

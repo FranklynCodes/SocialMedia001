@@ -36,9 +36,27 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
 		</Button>
 	);
 
-	return (
+	// Break on edge case of user not logged in
+	// return (
+	// 	<Button as="div" labelPosition="right" onClick={likePost}>
+	// 		<MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
+	// 		<Label basic color="teal" pointing="left">
+	// 			{likeCount}
+	// 		</Label>
+	// 	</Button>
+	// );
+
+	// TODO: Highlight login button and GIVE error message, explain why you have to login first to user in UI
+	return user ? (
 		<Button as="div" labelPosition="right" onClick={likePost}>
-			<MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
+			<MyPopup content={liked ? "Unlike Post" : "Like Post"}>{likeButton}</MyPopup>
+			<Label basic color="teal" pointing="left">
+				{likeCount}
+			</Label>
+		</Button>
+	) : (
+		<Button labelPosition="right" as="a" href="/login">
+			<MyPopup content={liked ? "Unlike Post" : "Like Post"}>{likeButton}</MyPopup>
 			<Label basic color="teal" pointing="left">
 				{likeCount}
 			</Label>
