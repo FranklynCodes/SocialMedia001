@@ -25,7 +25,7 @@ function SinglePost(props) {
 	const { user } = useContext(AuthContext);
 	const commentInputRef = useRef(null);
 
-	console.log("postId:", postId);
+	//console.log("postId:", postId);
 
 	const [comment, setComment] = useState("");
 
