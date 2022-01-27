@@ -27,10 +27,10 @@ const AuthContext = createContext({
 
 function authReducer(state, action) {
 	switch (action.type) {
-		case "LOGIN": // Normal to have in variables but since only two will be in strings
+		case "LOGIN": // Normal to have const variables but since only two we will be in strings //TODO: Swap to variables
 			return {
 				...state,
-				user: action.payload, // Getting data and you want to set our user in our state to this data
+				user: action.payload, // Getting data then allocates data to user variable state
 			};
 		case "LOGOUT": {
 			return {
@@ -48,7 +48,6 @@ function AuthProvider(props) {
 	const [state, dispatch] = useReducer(authReducer, initialState); // Use this to dispatch any action then attach this to any type or payload then when that is dispatched the reducer will listen to it for changes and preform according action
 
 	function login(userData) {
-		// TODO: Add
 		localStorage.setItem("jwtToken", userData.token);
 		dispatch({
 			type: "LOGIN",
