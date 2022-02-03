@@ -84,7 +84,7 @@ module.exports = {
 
 			if (post) {
 				// A user can only have one like per post
-				if (post.likes.find((like) => like.username)) {
+				if (post.likes.find((like) => like.username === username)) {
 					// Returns object
 					// Post already liked, unlike it
 					post.likes = post.likes.filter((like) => like.username !== username); // Leave all likes that do not match username, however remove the truty username likes

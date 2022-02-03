@@ -67,7 +67,7 @@ module.exports = {
 				throw new UserInputError("Error", { errors });
 			}
 
-			// TODO: Validate user Data, such as empty fields, password don't match, email already exists
+			// TODO: Validate user Data, such as empty fields, password don't match, email already exists , see UTIL VALIDATORS 
 			// TODO: Check if username is not duplicate, duplicate email is "ok"
 			// TODO: Make sure user doesn't already exist
 
