@@ -11,7 +11,7 @@ import { FETCH_POSTS_QUERY } from "../util/graphql";
 
 function Home() {
 	const { user } = useContext(AuthContext);
-	console.log("user:", user);
+	//console.log("user:", user);
 	const { loading, data: { getPosts: posts } = {} } = useQuery(FETCH_POSTS_QUERY); // Careful posts can be null or undefined, create a case for that
 
 	return (

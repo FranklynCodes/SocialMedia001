@@ -21,7 +21,7 @@ function PostForm() {
 		update(proxy, result) {
 			// ~ See posts.js ! comments
 			// ? How do l delete cache? How do l directly access cache and modify it? How do l use graphql querry on our existing data
-			console.log("PostForm\tresult:", result);
+			//console.log("PostForm\tresult:", result);
 
 			// ! Inside variable getPosts, all this data is scoped inside getPosts, it is the rootQuerry
 			const data = proxy.readQuery({

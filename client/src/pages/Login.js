@@ -20,7 +20,7 @@ function Login(props) {
 		// will triger on mutation execute
 		update(_, { data: { login: userData } }) {
 			// ! Need to hit this function first in order to pass the userdata held from the context variable
-			console.log("userData:", userData);
+			//console.log("userData:", userData);
 			context.login(userData);
 			props.history.push("/");
 		},
@@ -29,11 +29,8 @@ function Login(props) {
 
 			// https://github.com/dotansimha/graphql-code-generator/issues/3865 - exception deprecated  // setErrors(err.graphQLErrors[0].extensions.exception.errors); // - deprecated
 
-			console.log(
-				"err.graphQLErrors[0].extensions.errors:",
-				err.graphQLErrors[0].extensions.errors
-			);
-			// DIFF 
+			//console.log("err.graphQLErrors[0].extensions.errors:", err.graphQLErrors[0].extensions.errors);
+
 			setErrors(err.graphQLErrors[0].extensions.errors); // Our server code we give, one error which contains all objects that hold those errors via array
 		},
 		variables: values, // OR variables: values,

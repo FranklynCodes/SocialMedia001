@@ -34,10 +34,7 @@ function Register(props) {
 
 			// https://github.com/dotansimha/graphql-code-generator/issues/3865 - exception deprecated  // setErrors(err.graphQLErrors[0].extensions.exception.errors); // - deprecated
 
-			console.log(
-				"err.graphQLErrors[0].extensions.errors:",
-				err.graphQLErrors[0].extensions.errors
-			);
+			//console.log( "err.graphQLErrors[0].extensions.errors:",err.graphQLErrors[0].extensions.errors);
 
 			setErrors(err.graphQLErrors[0].extensions.errors); // Our server code we give, one error which contains all objects that hold those errors via array
 		},
