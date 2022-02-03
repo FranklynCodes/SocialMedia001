@@ -47,6 +47,7 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
 	// );
 
 	// TODO: Highlight login button and GIVE error message, explain why you have to login first to user in UI
+	// diff
 	return user ? (
 		<Button as="div" labelPosition="right" onClick={likePost}>
 			<MyPopup content={liked ? "Unlike Post" : "Like Post"}>{likeButton}</MyPopup>

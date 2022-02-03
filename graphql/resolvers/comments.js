@@ -20,10 +20,11 @@ module.exports = {
 			if (post) {
 				// Mongoose turns our data models into js objects
 				post.comments.unshift({
-					body: body, // swap later
+					body: body, // swap later, used to store body of comments into database
 					username,
 					createdAt: new Date().toISOString(),
 				});
+
 				await post.save();
 				return post;
 			} else {

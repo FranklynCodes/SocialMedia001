@@ -33,7 +33,7 @@ function Login(props) {
 				"err.graphQLErrors[0].extensions.errors:",
 				err.graphQLErrors[0].extensions.errors
 			);
-
+			// DIFF 
 			setErrors(err.graphQLErrors[0].extensions.errors); // Our server code we give, one error which contains all objects that hold those errors via array
 		},
 		variables: values, // OR variables: values,
