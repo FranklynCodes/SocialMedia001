@@ -1,0 +1,6 @@
+module.exports = {
+	MONGODB:
+		"",
+
+	SECRET_KEY: "Place Secret Key Here, key to encode JST token",
+};

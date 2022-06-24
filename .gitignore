@@ -33,4 +33,4 @@ yarn-error.log*
 node_modules
 .env
 *Secret.md
-
+/DepolymentGuide.txt

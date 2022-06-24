@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "node index",
-    "start": "nodemon index"
+    "server": "node index",
+    "start": "nodemon index",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "keywords": [
     "Social Media"
@@ -20,6 +22,7 @@
     "mongoose": "^5.13.11"
   },
   "devDependencies": {
+    "concurrently": "^7.2.0",
     "nodemon": "^2.0.13"
   }
 }
