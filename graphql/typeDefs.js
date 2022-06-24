@@ -1,4 +1,5 @@
-// Declares type schema for mongodb with sapollo
+// Declares type schema for mongodb with apollo
+// https://graphql.org/learn/queries/
 
 const { gql } = require("apollo-server");
 

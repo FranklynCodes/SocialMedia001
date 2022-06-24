@@ -21,7 +21,6 @@ function App() {
 				<Container>
 					<MenuBar />
 					<Route exact path="/" component={Home}></Route>
-					{/* Passes down atributes such as exact, patch, component */}
 					<AuthRoute exact path="/login" component={Login}></AuthRoute>
 					<AuthRoute exact path="/register" component={Register}></AuthRoute>
 					<Route exact path={"/posts/:postId"} component={SinglePost}></Route>

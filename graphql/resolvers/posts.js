@@ -32,11 +32,11 @@ module.exports = {
 		},
 	},
 	Mutation: {
-		// Protected resolvers, User logs in and gets a protected authentication token then it get sents to a Authorization header, then send that header with the request and we need to get that token then decode it and get that information from it, to make sure that the user is autheticated to make sure the user is autheticated to make sure not anyone can create a post
+		// Protected resolvers, User logs in and gets a protected authentication token then it get sents to a Authorization header, then sends that header with the request and we need to get that token, to decode for information to make sure that the user is autheticated so not anyone can create a post
 
 		// People makes lots of mistakes of putting this authetication middleware for express itself that means it will run on EACH requests even on non-protected routes which is bad. See context arugment in global index.js for the method space/solves this
 
-		// user will always be true here because checkAuth does our validation by the time were back in this file
+		// user will always be true here because checkAuth does our validation by the time were back in this file ? Cant l comment this out
 		async createPost(_, { body }, context) {
 			//console.log("createPost:Start\n"); // To check when resolvers are being hit
 			const user = checkAuth(context);
@@ -84,16 +84,26 @@ module.exports = {
 
 			if (post) {
 				// A user can only have one like per post
+
+				// Search through postID array to find if there is a like value associated to the username currently logged in if there is not a liked value associated to current logged in user. Focus on if a like ITSELF EXISTS to do associated user within that postID
+
+				// (like) => like.username === username) = Return truty value if logged in user has liked OR not liked the post default is false.
+
 				if (post.likes.find((like) => like.username === username)) {
+					console.log("username:", username);
 					// Returns object
 					// Post already liked, unlike it
-					post.likes = post.likes.filter((like) => like.username !== username); // Leave all likes that do not match username, however remove the truty username likes
+					console.log("post.likes:", post.likes);
+					post.likes = post.likes.filter((like) => like.username !== username);
+					console.log("post.likes:", post.likes);
+					// Leave all likes that do not match username, however remove the truty username likes
 				} else {
 					// Not liked, like post
 					post.likes.push({
 						username,
 						createdAt: new Date().toISOString(),
 					});
+					console.log("AAApost.likes:", post.likes);
 				}
 				await post.save();
 				return post;

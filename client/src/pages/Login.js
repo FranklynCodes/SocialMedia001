@@ -45,7 +45,7 @@ function Login(props) {
 	return (
 		<div className="form-container">
 			{/* // TODO: Warning: A component is changing an uncontrolled input to be controlled.  
-			This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or 
+			This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled
 			https://reactjs.org/docs/forms.html#controlled-components */}
 
 			<Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
@@ -74,9 +74,8 @@ function Login(props) {
 				<Button type="sumbit" primary>
 					Login
 				</Button>
-				{/* Errors all the time since must hold a variable, always a empty error pre-stored so have to LOOKUP if error object has any keys more then 0, which means it does have a error  */}
 			</Form>
-
+			{/* Errors all the time since must hold a variable, always a empty error pre-stored so have to LOOKUP if error object has any keys more then 0, which means it does have a error  */}
 			{Object.keys(errors).length > 0 && (
 				<div className="ui error message">
 					<ul className="list">

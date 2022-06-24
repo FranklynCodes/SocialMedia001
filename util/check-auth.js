@@ -7,9 +7,9 @@ const { SECRET_KEY } = require("../config");
 
 module.exports = (context) => {
 	// context = {...headers} will have objects, headers, etc...
-	const authHeader = context.req.headers.authorization;
+	const authHeader = context.req.headers.authorization; // See ApolloProvider.js
 	if (authHeader) {
-		// Bearer .... Convetion when working with tokens usually
+		// Bearer Convention when working with tokens usually
 		const token = authHeader.split("Bearer ")[1];
 		if (token) {
 			try {

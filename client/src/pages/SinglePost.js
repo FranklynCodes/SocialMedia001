@@ -170,6 +170,7 @@ const SUBMIT_COMMENT_MUTATION = gql`
 	}
 `;
 
+// https://www.apollographql.com/docs/ios/tutorial/tutorial-detail-view/
 const FETCH_POST_QUERY = gql`
 	query ($postId: ID!) {
 		getPost(postId: $postId) {

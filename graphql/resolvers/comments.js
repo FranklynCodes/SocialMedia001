@@ -40,10 +40,13 @@ module.exports = {
 			const post = await Post.findById(postId);
 
 			if (post) {
-				const commentIndex = post.comments.findIndex((c) => c.id === commentId); // Find comment index in the array comments then delete
+				// Search through chosen postID for a comment that matches your commentID if one exists return that index. If not return -1. Comment itself doesn't matter only checking if truty
 
+				const commentIndex = post.comments.findIndex((c) => c.id === commentId);
+
+				// Stops users from deleting anyones comments
 				if ((post.comments[commentIndex].username = username)) {
-					// Stops users from deleting anyones comments
+					// Find comment index in the array comments then delete
 					post.comments.splice(commentIndex, 1); // Start at commentIndex and remove just one
 					await post.save();
 					return post;

@@ -23,6 +23,7 @@ module.exports = {
 		// Resolver arguments
 		// Parents gives result of previous input from last step
 		// Can have chained resolvers, which can get processed through different ways
+		// https://www.apollographql.com/docs/apollo-server/v2/data/resolvers/#resolver-chains
 		async login(_, { username, password }) {
 			const { errors, valid } = validateLoginInput(username, password);
 

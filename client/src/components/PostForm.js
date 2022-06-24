@@ -18,6 +18,8 @@ function PostForm() {
 		// ! Querrys are not being constantly being sent to server, it may seem so but it is limited to being sent only to the client side cacche.
 		// ! Apollo querry output will show several queries but our server is not receiving all of those query only the 1st getPosts is being sent to the server, do not worry about overloading your server in this condition
 		// | Learn apollo local caching query and server connection
+		// https://www.apollographql.com/docs/react/local-state/client-side-schema
+		// https://www.apollographql.com/docs/react/performance/server-side-rendering
 		update(proxy, result) {
 			// ~ See posts.js ! comments
 			// ? How do l delete cache? How do l directly access cache and modify it? How do l use graphql querry on our existing data
@@ -29,7 +31,7 @@ function PostForm() {
 				variables: values,
 			});
 			data.getPosts = [result.data.createPost, ...data.getPosts];
-			proxy.writeQuery({ query: FETCH_POSTS_QUERY, variables: values, data });
+			proxy.writeQuery({ query: FETCH_POSTS_QUERY, variables: values, data }); // # Research .writeQuerry 
 			values.body = "";
 		},
 		onError(error) {

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-// import gql from "graphql-tag";
 import { Grid, Transition } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
@@ -12,6 +11,7 @@ import { FETCH_POSTS_QUERY } from "../util/graphql";
 function Home() {
 	const { user } = useContext(AuthContext);
 	//console.log("user:", user);
+	// https://www.apollographql.com/docs/react/data/queries/
 	const { loading, data: { getPosts: posts } = {} } = useQuery(FETCH_POSTS_QUERY); // Careful posts can be null or undefined, create a case for that
 
 	return (

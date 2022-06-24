@@ -19,6 +19,8 @@ if (localStorage.getItem("jwtToken")) {
 		initialState.user = decodedToken;
 	}
 }
+// https://reactjs.org/docs/context.html#reactcreatecontext
+// Storing data into authContext to be passed through the component tree and used in multiple areas of code. *.Provider = refernse to its "closest parent"
 const AuthContext = createContext({
 	user: null,
 	login: (userData) => {},
@@ -43,7 +45,7 @@ function authReducer(state, action) {
 			return state;
 	}
 }
-
+// | AuthProivder() uses useReducer() to call authReducer to stores all the required data into our reducer
 function AuthProvider(props) {
 	const [state, dispatch] = useReducer(authReducer, initialState); // Use this to dispatch any action then attach this to any type or payload then when that is dispatched the reducer will listen to it for changes and preform according action
 
@@ -60,8 +62,9 @@ function AuthProvider(props) {
 			type: "LOGOUT",
 		});
 	}
-
+	// https://reactjs.org/docs/context.html#contextprovider
 	return (
+		// Provider Subscribes to AuthContext to see if state changes. If user login, logout state becomes TRUTY
 		<AuthContext.Provider
 			value={{ user: state.user, login, logout }}
 			{...props}
