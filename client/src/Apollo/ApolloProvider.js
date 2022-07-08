@@ -19,13 +19,13 @@ const authLink = setContext((req, pre) => {
 	return {
 		// Will modifiy current request
 		headers: {
-			Authorization: token ? `Bearer ${token}` : "", // Will merge headers of request with the current exisiting headers
+			Authorization: token ? `Bearer ${token}` : "", // Merge headers of request with current exisiting headers
 		},
 	};
 });
 
 const client = new ApolloClient({
-	link: authLink.concat(httpLink), // This will added the token to our request and succesfully send any protected api call
+	link: authLink.concat(httpLink), // Adds the token to our request and succesfully send any protected api call
 	cache: new InMemoryCache(), // Instantiates memory in cache
 });
 
