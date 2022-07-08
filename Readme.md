@@ -4,8 +4,6 @@
 
 World Connects is a full stack social media application. This project has full authentication, authorization and CRUD features built in. Users can create posts while liking and commenting to update in real time.
 
-Please take a look at my middle of project git commit messages.
-
 Website Production - <https://worldconnection.netlify.app/>
 
 <img src ="https://api.netlify.com/api/v1/badges/afe4370c-a7b6-4f00-8ddd-3aa23dff2bf5/deploy-status" alt ="Social Media" />
